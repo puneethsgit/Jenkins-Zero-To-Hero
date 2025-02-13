@@ -31,6 +31,40 @@ A: This can be done in multiple ways,
      - Webhooks: A webhook can be created in GitHub to notify Jenkins when changes are pushed to the repository. 
                  Jenkins can then automatically build the updated code. This can be set up in the "Build Triggers" section of a job and in the GitHub repository settings.
    ```
+
+Jenkins pipelines can be triggered in multiple ways, depending on the use case. Here are the main methods:  
+
+### **1. Manually Triggered**
+- **From Jenkins UI**: Users can click the “Build Now” button in the Jenkins dashboard.  
+- **Using Jenkins CLI**: Commands like `java -jar jenkins-cli.jar build <job-name>` can trigger a build.  
+
+### **2. Automatically Triggered**
+#### **a. Source Code Changes (SCM Triggers)**
+- **Webhook from GitHub/GitLab/Bitbucket**: A push to a repository can trigger a pipeline using webhooks.  
+- **Polling SCM**: Jenkins can periodically check for changes in the repository (`Poll SCM` option).  
+
+#### **b. Scheduled Builds**
+- **Cron Jobs**: Pipelines can run at scheduled times using a cron syntax (e.g., `H 0 * * *` for a daily midnight build).  
+
+#### **c. Dependent Jobs**
+- **Upstream/Downstream Jobs**: A pipeline can start automatically when another job finishes.  
+
+### **3. API Calls & External Triggers**
+- **Jenkins REST API**: You can trigger builds using an API call (`curl -X POST <Jenkins-URL>/job/<job-name>/build?token=<token>`).  
+- **Jenkins Webhooks**: External applications can trigger pipelines via HTTP webhooks.  
+- **Event-Driven Plugins**: Jenkins integrates with tools like Kafka, RabbitMQ, or AWS SNS to trigger pipelines on events.  
+
+### **4. Code-based Triggers**
+- **Jenkinsfile with `triggers{}` block**: You can define triggers inside a `Jenkinsfile`, such as:
+  ```groovy
+  pipeline {
+      triggers {
+          cron('H 0 * * *')  // Runs daily
+      }
+  }
+  ```
+
+Do you have a specific trigger method in mind that you need help setting up?
 Q: How to backup Jenkins ?
 
 A: Backing up Jenkins is a very easy process, there are multiple default and configured files and folders in Jenkins that you might want to backup.
